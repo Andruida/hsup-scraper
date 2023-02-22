@@ -1,0 +1,6 @@
+output*
+*.json
+!config_sample.json
+images/
+venv/
+
