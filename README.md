@@ -21,4 +21,4 @@ pip install requests
 
 3. Készíts egy másolatot `config_sample.json` fájlról `config.json` néven, és írd be a HSUP-s fiókod adatait
 
-4. Futtasd le a `scraper.py` fájlt
+4. A `scraper.py` fájl innentől futtatható
