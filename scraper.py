@@ -20,6 +20,21 @@ output.write("% HSUP tananyag 2. félév\n% Andruida\n\n")
 
 # authenticate
 
+if config.get("bearer"):
+    print("Using bearer from config")
+    bearer = config["bearer"]
+    auth_header = {
+        "authorization": "Bearer "+bearer,
+        "User-Agent": UA
+    }
+    res = req.get(URL_BASE+"/api/progress", headers=auth_header)
+
+    if res.status_code != 200:
+        print("Bearer invalid, logging in")
+        del config["bearer"]
+        bearer = None
+        auth_header = None
+
 if not config.get("bearer"):
     res = req.post(URL_BASE+"/api/auth/login", json=config, headers={"User-Agent": UA})
 
@@ -36,13 +51,11 @@ if not config.get("bearer"):
         json.dump(config, f, indent=4)
 
     print("Logged in as", user["fullName"])
-else:
-    bearer = config["bearer"]
+    auth_header = {
+        "authorization": "Bearer "+bearer,
+        "User-Agent": UA
+    }
 
-auth_header = {
-    "authorization": "Bearer "+bearer,
-    "User-Agent": UA
-}
 
 # get data
 
